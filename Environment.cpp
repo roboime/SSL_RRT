@@ -27,6 +27,7 @@ bool ObstacleGrid::checkObstacleColision(Node& current, Node& target){
     //Verificar se o discriminante é maior ou igual a 0
     aux = pow(2*((target - current)*(current - aux_center)), 2) - 4*(pow((target - current).modulus(), 2))*(pow((current - aux_center).modulus(), 2) - pow(aux_radius, 2));
     if(aux >= 0){
+      //Verificar se as solução está entre 0 e 1
       if((sqrt(aux) - 2*((target - current)*(current - aux_center)))/(2*pow((target - current).modulus(), 2)) <= 1 &&
       (sqrt(aux) - 2*((target - current)*(current - aux_center)))/(2*pow((target - current).modulus(), 2)) >= 0) return true;
       if((-sqrt(aux) - 2*((target - current)*(current - aux_center)))/(2*pow((target - current).modulus(), 2)) <= 1 &&
