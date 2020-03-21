@@ -17,6 +17,8 @@ public:
   double distance(Node& current, Node& target);
   //Função para calcular um ponto aleatório no campo
   Node randomState();
+  //Checar colisão com as extremidades
+  bool checkWallColision(Node& current);
 };
 
 class ObstacleGrid{

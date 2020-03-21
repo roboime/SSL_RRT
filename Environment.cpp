@@ -23,6 +23,13 @@ Node Environment::randomState(){
   return newstate;
 }
 
+bool Environment::checkWallColision(Node& current){
+  //Verificar se os módulos das coordenadas são maiores que as dimensões do campo
+  if(abs(current.x) >= (field_legth/2)) return true;
+  else if(abs(current.y) >= (field_width/2)) return true;
+  else return false;
+}
+
 ObstacleGrid::ObstacleGrid(vector<pair<double, Node>> grid) : grid(grid){}
 
 bool ObstacleGrid::checkObstacleColision(Node& current, Node& target){
