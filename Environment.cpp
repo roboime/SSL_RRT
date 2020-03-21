@@ -7,6 +7,8 @@
 
 using namespace std;
 
+Environment::Environment(int field_legth, int field_width) : field_legth(field_legth), field_width(field_width) {}
+
 double Environment::distance(Node& current, Node& target){
   return (target - current).modulus();
 }
@@ -16,9 +18,8 @@ Node Environment::randomState(){
   //gera uma seed diferente
   srand(time(NULL));
   //atribui valores aleatórios para o novo Node
-  newstate.x = field_legth * (((double) (rand() % 100 ) / (100)) - 0.5 );
-  newstate.y = field_width * (((double) (rand() % 100 ) / (100)) - 0.5 );
-
+  newstate.x = field_legth * (((double) (rand() % 1000 ) / (1000)) - 0.5 );
+  newstate.y = field_width * (((double) (rand() % 1000 ) / (1000)) - 0.5 );
   return newstate;
 }
 
@@ -46,6 +47,5 @@ bool ObstacleGrid::checkObstacleColision(Node& current, Node& target){
       (-sqrt(aux) - 2*((target - current)*(current - aux_center)))/(2*pow((target - current).modulus(), 2)) >= 0) return true;
     }
   }
-  aux = 0;
   return false;
 }

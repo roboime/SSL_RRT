@@ -12,6 +12,7 @@ private:
   int field_legth;
   int field_width;
 public:
+  Environment(int field_legth, int field_width);
   //Função para calcular distância entre dois nós
   double distance(Node& current, Node& target);
   //Função para calcular um ponto aleatório no campo
