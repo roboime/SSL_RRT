@@ -1,12 +1,14 @@
 #pragma once
 
-class Node{
-private:
-  Node* _parent;
+//Forward declarations
+class Environment;
+class ObstacleGrid;
 
+class Node{
 public:
   double x;
   double y;
+  Node* _parent;
   Node(double x, double y, Node* parent);
   //Definir operação de soma
   Node operator + (const Node& obj);
@@ -18,6 +20,15 @@ public:
   double modulus() const;
   //Multiplicar por constante
   Node multiplyByConstant(double c) const;
-  //Calcular projeção
-  Node calculateProjection(const Node& base);
+  //Calcular unitário
+  Node makeUnitary();
+};
+
+class Tree{
+private:
+    double _probGoal;
+public:
+  Tree(double probGoal);
+  //função para determinar a extensão da árvore
+  Node extend(Environment& env, ObstacleGrid& obs, Node& current, Node& target, double step);
 };

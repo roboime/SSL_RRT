@@ -56,3 +56,17 @@ bool ObstacleGrid::checkObstacleColision(Node& current, Node& target){
   }
   return false;
 }
+
+/*
+int main(){
+
+  Environment env(200, 200);
+  Node obs1 (3,4,nullptr);
+  Node current(10,13,nullptr);
+  Node target(9,12,nullptr);
+  ObstacleGrid obs(vector<pair<double, Node>>{make_pair(5, obs1)});
+  Tree tr(0);
+  Node temp = tr.extend(env, obs, current, target, 2);
+  cout << temp.x << "\n" <<temp.y;
+}
+*/
