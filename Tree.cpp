@@ -6,39 +6,39 @@
 #include "Tree.hpp"
 #include "Environment.hpp"
 
-Node::Node(double x = 0, double y = 0, Node* parent = nullptr) : x(x), y(y), _parent(parent){}
+Node::Node(double x = 0, double y = 0, Node* parent = nullptr) : _x(x), _y(y), _parent(parent){}
 
 Node Node::operator + (const Node& obj){
   Node operation;
-  operation.x = this->x + obj.x;
-  operation.y = this->y + obj.y;
+  operation._x = this->_x + obj._x;
+  operation._y = this->_y + obj._y;
   return operation;
 }
 
 Node Node::operator - (const Node& obj){
   Node operation;
-  operation.x = this->x - obj.x;
-  operation.y = this->y - obj.y;
+  operation._x = this->_x - obj._x;
+  operation._y = this->_y - obj._y;
   return operation;
 }
 
 double Node::operator * (const Node& obj){
-  return ((this->x * obj.x) + (this->y * obj.y));
+  return ((this->_x * obj._x) + (this->_y * obj._y));
 }
 
 Node Node::multiplyByConstant(double c) const{
   Node operation;
-  operation.x = c * this->x;
-  operation.y = c * this->y;
+  operation._x = c * this->_x;
+  operation._y = c * this->_y;
   return operation;
 }
 
 double Node::modulus() const{
-  return(sqrt(pow(this->x, 2) + pow(this->y, 2)));
+  return(sqrt(pow(this->_x, 2) + pow(this->_y, 2)));
 }
 
 Node Node::makeUnitary(){
-  return Node(x/this->modulus(), y/this->modulus(), this->_parent);
+  return Node(_x/this->modulus(), _y/this->modulus(), this->_parent);
 }
 
 

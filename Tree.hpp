@@ -6,8 +6,8 @@ class ObstacleGrid;
 
 class Node{
 public:
-  double x;
-  double y;
+  double _x;
+  double _y;
   Node* _parent;
   Node(double x, double y, Node* parent);
   //Definir operação de soma
