@@ -1,5 +1,10 @@
 #pragma once
 
+#include <flann/algorithms/dist.h>
+#include <flann/algorithms/kdtree_single_index.h>
+#include <flann/flann.hpp>
+#include <vector>
+
 //Forward declarations
 class Environment;
 class ObstacleGrid;
@@ -27,6 +32,8 @@ public:
 class Tree{
 private:
     double _probGoal;
+    flann::Index<flann::L2_Simple<double>> _kdtree;
+
 public:
   Tree(double probGoal);
   //função para determinar a extensão da árvore

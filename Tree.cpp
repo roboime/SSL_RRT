@@ -42,7 +42,7 @@ Node Node::makeUnitary(){
 }
 
 
-Tree::Tree(double probGoal){
+Tree::Tree(double probGoal) : _kdtree(flann::KDTreeSingleIndexParams()){
   if (probGoal >=0 && probGoal <= 1) _probGoal = probGoal;
   else _probGoal = 1;
 }
