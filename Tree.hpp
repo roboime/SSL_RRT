@@ -18,8 +18,8 @@ struct hash_vector {
     template <class T>
     size_t operator()(const vector<T>& p) const
     {
-        auto hash1 = hash<T>()(p[0]);
-        auto hash2 = hash<T>()(p[1]);
+        auto hash1 = hash<T>()(p[0]*73856093);
+        auto hash2 = hash<T>()(p[1]*19349663);
         return hash1 ^ hash2;
     }
 };
@@ -51,13 +51,13 @@ private:
     double _probGoal;
     Node _root;
     Node _goal;
-    unordered_map<vector<double>, Node, hash_vector> _nodemap;
     flann::Index<flann::L2_Simple<double>> _kdtree;
 
 public:
+  unordered_map<vector<double>, Node, hash_vector> _nodemap;
   Tree(Node& root, Node& goal, double probGoal);
   //função para determinar a extensão da árvore
-  Node extend(Environment& env, ObstacleGrid& obs, double step);
+  bool extend(Environment& env, ObstacleGrid& obs, double step);
   //função para escolher target
   Node chooseTarget(Environment& env);
   //calcular Neighrest Neighbor
