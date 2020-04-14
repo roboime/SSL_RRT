@@ -59,9 +59,7 @@ bool ObstacleGrid::checkObstacleColision(Node& current, Node& target){
   return false;
 }
 
-/*
 
-GERAR PIXMAP
 
 int main(){
 
@@ -69,11 +67,17 @@ int main(){
   Node obs1 (50,50,nullptr);
   Node start(0,0,nullptr);
   Node goal(100,100,nullptr);
-  Tree tr(start, goal, 0.5);
-  ObstacleGrid obs(vector<pair<double, Node>>{make_pair(40, obs1)});
-  for(int i = 0; i <= 1000;i++) tr.extend(env, obs, 8);
-  for (auto x : tr._nodemap)
-    cout << x.first[0] << " " << x.first[1] << "\n";
+  ObstacleGrid obs(vector<pair<double, Node>>{make_pair(20, obs1)});
+  Tree tr(start, goal, 0.8, env,obs);
+  tr.grow();
+  for (auto x : tr._nodemap){
+    /*
+    cout << x.first[0] << " " << x.first[1] << " ";
+    if(x.first[0] != 0 &&  x.first[1] !=0)
+      cout << x.second._parent->_x << " " << x.second._parent->_y << "\n";
+      */
+  }
+  vector<vector<double>> path = tr.backtrack();
   //printar o ppm
   ofstream myfile;
   myfile.open("ex.ppm");
@@ -82,10 +86,13 @@ int main(){
   int ir = 0; int ig = 0; int ib = 0;
   bool found = false;
   myfile  << "P3\n" << nx << " " << ny << "\n255\n";
+  for (auto x = path.begin(); x!= path.end(); ++x){
+    cout << (*x)[0] << " " << (*x)[1] <<"\n";
+  }
   for(int j = ny - 1; j >= 0; j--){
     for(int i = 0; i < nx; i++){
-      for (auto x : tr._nodemap){
-        if(int(x.first[0]) == i-100 && int(x.first[1]) == j-100){
+      for (auto x = path.begin(); x!= path.end(); ++x){
+        if(int((*x)[0]) == i-100 && int((*x)[1]) == j-100){
           ir = 255;
           break;
         }
@@ -99,4 +106,3 @@ int main(){
     }
   }
 }
-*/

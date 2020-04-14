@@ -37,6 +37,8 @@ public:
   Node operator - (const Node& obj);
   //Definir operação de produto escalar
   double operator * (const Node& obj);
+  //comparar dois nodes
+  bool operator == (const Node& obj);
   //Módulo do vetor;
   double modulus() const;
   //Multiplicar por constante
@@ -51,17 +53,24 @@ private:
     double _probGoal;
     Node _root;
     Node _goal;
+    Environment& _env;
+    ObstacleGrid& _obs;
     flann::Index<flann::L2_Simple<double>> _kdtree;
 
 public:
   unordered_map<vector<double>, Node, hash_vector> _nodemap;
-  Tree(Node& root, Node& goal, double probGoal);
+  Tree(Node& root, Node& goal, double probGoal, Environment& _env, ObstacleGrid& _obs);
   //função para determinar a extensão da árvore
-  bool extend(Environment& env, ObstacleGrid& obs, double step);
+  //ponteiro para determinar  distancia do ponto recem adiciondo ao objetivo
+  bool extend(double step, Node* last = nullptr);
   //função para escolher target
-  Node chooseTarget(Environment& env);
+  Node chooseTarget();
   //calcular Neighrest Neighbor
   Node calcNN(Node& current);
   //adicionar pontos na arvore
   void addPoints(Node& current);
+  //encontrar em ordem o caminho que leva ao objetivo
+  vector<vector<double>> backtrack();
+  // funcao que faz crecer a arvore proceduralmente
+  bool grow(double step = 8, double threshold = 8);
 };

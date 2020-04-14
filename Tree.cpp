@@ -29,6 +29,11 @@ double Node::operator * (const Node& obj){
   return ((this->_x * obj._x) + (this->_y * obj._y));
 }
 
+bool Node::operator == (const Node& obj){
+  if(this->_x == obj._x && this->_y == obj._y && this->_parent == obj._parent) return true;
+  else return false;
+}
+
 Node Node::multiplyByConstant(double c) const{
   Node operation;
   operation._x = c * this->_x;
@@ -45,7 +50,7 @@ Node Node::makeUnitary(){
 }
 
 
-Tree::Tree(Node& root, Node& goal, double probGoal) : _root(root), _goal(goal), _kdtree(flann::KDTreeSingleIndexParams()){
+Tree::Tree(Node& root, Node& goal, double probGoal, Environment& env, ObstacleGrid& obs) : _root(root), _goal(goal), _env(env), _obs(obs), _kdtree(flann::KDTreeSingleIndexParams()){
   //iniciar kdtree com o primeiro Node
   _kdtree.buildIndex(flann::Matrix<double>(root._vec.data(), 1, 2));
   //adicionar primeiro node na fila
@@ -55,11 +60,11 @@ Tree::Tree(Node& root, Node& goal, double probGoal) : _root(root), _goal(goal), 
   else _probGoal = 1;
 }
 
-Node Tree::chooseTarget(Environment& env){
+Node Tree::chooseTarget(){
   //gera um valor aleatório para comparar com _probGoal
   double p = (double(rand() % 100 ) / (100));
   if(p <= _probGoal) return _goal;
-  else return env.randomState();
+  else return _env.randomState();
 }
 
 Node Tree::calcNN(Node& target){
@@ -79,20 +84,32 @@ Node Tree::calcNN(Node& target){
   return _nodemap[temp];
 }
 
-bool Tree::extend(Environment& env, ObstacleGrid& obs, double step){
-  Node target = chooseTarget(env);
+bool Tree::extend(double step, Node* last){
+  Node target = chooseTarget();
   Node nearest = calcNN(target);
   //calcular proximo node
   Node temp = (nearest + ((target-nearest).makeUnitary()).multiplyByConstant(step));
   //verificar colisão com parede ou obstáculo
-  if(env.checkWallColision(temp) || obs.checkObstacleColision(nearest, temp)) return false;
+  if(_env.checkWallColision(temp) || _obs.checkObstacleColision(nearest, temp)) return false;
   else{
     //setar o parent do ponto
     temp._parent = &_nodemap[nearest._vec];
     addPoints(temp);
+    *last = temp;
     return true;
   }
+}
 
+bool Tree::grow(double step, double threshold){
+  Node* last = new Node(0, 0, nullptr);
+  bool valid = false;
+  do{
+    if(extend(step, last)) valid = _env.distance(*last, _goal) > threshold;
+    else valid = true;
+  }while(valid);
+  //adicionar goal no _nodemap com parent setado
+  _goal._parent = &_nodemap[last->_vec];
+  addPoints(_goal);
 }
 
 void Tree::addPoints(Node& current){
@@ -100,4 +117,17 @@ void Tree::addPoints(Node& current){
   _nodemap[current._vec] = current;
   //Adicionar na kdtree
   _kdtree.addPoints(flann::Matrix<double>(_nodemap[current._vec]._vec.data(), 1, 2));
+}
+
+vector<vector<double>> Tree::backtrack(){
+  Node temp = _goal;
+  vector<vector<double>> path = {_goal._vec};
+  //repetir até encontrar a origem
+  while(!(temp == _root)){
+    //encontrar parent do vetor
+    temp = _nodemap[(temp._parent)->_vec];
+    //adicionar no vetor
+    path.push_back(temp._vec);
+  }
+  return path;
 }
