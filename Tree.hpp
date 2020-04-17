@@ -56,6 +56,7 @@ private:
     Environment& _env;
     ObstacleGrid& _obs;
     flann::Index<flann::L2_Simple<double>> _kdtree;
+    vector<Node> _lastTree;
 
 public:
   unordered_map<vector<double>, Node, hash_vector> _nodemap;
@@ -70,7 +71,7 @@ public:
   //adicionar pontos na arvore
   void addPoints(Node& current);
   //encontrar em ordem o caminho que leva ao objetivo
-  vector<vector<double>> backtrack();
+  vector<Node> backtrack();
   // funcao que faz crecer a arvore proceduralmente
   bool grow(double step = 8, double threshold = 8);
 };

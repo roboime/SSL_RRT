@@ -77,32 +77,9 @@ int main(){
       cout << x.second._parent->_x << " " << x.second._parent->_y << "\n";
       */
   }
-  vector<vector<double>> path = tr.backtrack();
-  //printar o ppm
-  ofstream myfile;
-  myfile.open("ex.ppm");
-  int nx = 200;
-  int ny = 200;
-  int ir = 0; int ig = 0; int ib = 0;
+  vector<Node> path = tr.backtrack();
   bool found = false;
-  myfile  << "P3\n" << nx << " " << ny << "\n255\n";
   for (auto x = path.begin(); x!= path.end(); ++x){
-    cout << (*x)[0] << " " << (*x)[1] <<"\n";
-  }
-  for(int j = ny - 1; j >= 0; j--){
-    for(int i = 0; i < nx; i++){
-      for (auto x = path.begin(); x!= path.end(); ++x){
-        if(int((*x)[0]) == i-100 && int((*x)[1]) == j-100){
-          ir = 255;
-          break;
-        }
-      }
-      if(i == 100 && j == 100) ig = 255;
-      if(i == 199 && j == 199) ib = 255;
-      myfile << ir << " " << ig << " " << ib << "\n";
-      ir = 0;
-      ig = 0;
-      ib = 0;
-    }
+    cout << (*x)._x << " " << (*x)._y <<"\n";
   }
 }

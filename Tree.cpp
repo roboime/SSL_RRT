@@ -119,15 +119,15 @@ void Tree::addPoints(Node& current){
   _kdtree.addPoints(flann::Matrix<double>(_nodemap[current._vec]._vec.data(), 1, 2));
 }
 
-vector<vector<double>> Tree::backtrack(){
+vector<Node> Tree::backtrack(){
   Node temp = _goal;
-  vector<vector<double>> path = {_goal._vec};
+  vector<Node> path = {_goal};
   //repetir até encontrar a origem
   while(!(temp == _root)){
     //encontrar parent do vetor
     temp = _nodemap[(temp._parent)->_vec];
     //adicionar no vetor
-    path.push_back(temp._vec);
+    path.push_back(temp);
   }
   return path;
 }
