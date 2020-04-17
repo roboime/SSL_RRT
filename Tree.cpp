@@ -46,11 +46,13 @@ double Node::modulus() const{
 }
 
 Node Node::makeUnitary(){
-  return Node(_x/this->modulus(), _y/this->modulus(), this->_parent);
+  if(this->modulus() == 0) return Node(0,0,this->_parent);
+  else return Node(_x/this->modulus(), _y/this->modulus(), this->_parent);
 }
 
 
-Tree::Tree(Node& root, Node& goal, double probGoal, Environment& env, ObstacleGrid& obs) : _root(root), _goal(goal), _env(env), _obs(obs), _kdtree(flann::KDTreeSingleIndexParams()){
+Tree::Tree(Node& root, Node& goal, double probGoal, double probWaypoint, Environment& env, ObstacleGrid& obs, vector<Node>& waypointCache) :
+ _root(root), _goal(goal), _env(env), _obs(obs), _waypointCache(waypointCache), _kdtree(flann::KDTreeSingleIndexParams()){
   //iniciar kdtree com o primeiro Node
   _kdtree.buildIndex(flann::Matrix<double>(root._vec.data(), 1, 2));
   //adicionar primeiro node na fila
@@ -58,12 +60,20 @@ Tree::Tree(Node& root, Node& goal, double probGoal, Environment& env, ObstacleGr
   //verificar se probGoal é válido
   if (probGoal >=0 && probGoal <= 1) _probGoal = probGoal;
   else _probGoal = 1;
+  //verificar se probWaypoint é válido
+  if (probWaypoint >=0 && probWaypoint <= 1) _probWaypoint = probWaypoint;
+  else _probWaypoint = 0;
 }
 
 Node Tree::chooseTarget(){
   //gera um valor aleatório para comparar com _probGoal
   double p = (double(rand() % 100 ) / (100));
-  if(p <= _probGoal) return _goal;
+  int i = rand() % (_waypointCache).size();
+  //target sendo o objetivo
+  if(p>=0 && p <_probGoal) return _goal;
+  //target sendo waypoint da iteração passada
+  else if(p >=_probGoal && p < _probGoal + _probWaypoint) return (_waypointCache)[i];
+  //target aleatório
   else return _env.randomState();
 }
 
@@ -110,6 +120,8 @@ bool Tree::grow(double step, double threshold){
   //adicionar goal no _nodemap com parent setado
   _goal._parent = &_nodemap[last->_vec];
   addPoints(_goal);
+  //setar _parent do _root como nullptr(muito importante)
+  _nodemap[_root._vec]._parent = nullptr;
 }
 
 void Tree::addPoints(Node& current){

@@ -51,16 +51,17 @@ public:
 class Tree{
 private:
     double _probGoal;
+    double _probWaypoint;
     Node _root;
     Node _goal;
     Environment& _env;
     ObstacleGrid& _obs;
     flann::Index<flann::L2_Simple<double>> _kdtree;
-    vector<Node> _lastTree;
+    vector<Node> _waypointCache;
 
 public:
   unordered_map<vector<double>, Node, hash_vector> _nodemap;
-  Tree(Node& root, Node& goal, double probGoal, Environment& _env, ObstacleGrid& _obs);
+  Tree(Node& root, Node& goal, double probGoal, double probWaypoint, Environment& env, ObstacleGrid& obs, vector<Node>& waypointCache);
   //função para determinar a extensão da árvore
   //ponteiro para determinar  distancia do ponto recem adiciondo ao objetivo
   bool extend(double step, Node* last = nullptr);

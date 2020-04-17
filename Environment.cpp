@@ -67,19 +67,25 @@ int main(){
   Node obs1 (50,50,nullptr);
   Node start(0,0,nullptr);
   Node goal(100,100,nullptr);
+  vector<Node> iPath = {goal};
   ObstacleGrid obs(vector<pair<double, Node>>{make_pair(20, obs1)});
-  Tree tr(start, goal, 0.8, env,obs);
+  Tree tr0(start, goal, 0.1, 0.6, env,obs, iPath);
+  tr0.grow();
+  vector<Node> path0 = tr0.backtrack();
+  Tree tr(start, goal, 0.1, 0.6, env,obs, path0);
   tr.grow();
+  vector<Node> path = tr.backtrack();
+
   for (auto x : tr._nodemap){
-    /*
     cout << x.first[0] << " " << x.first[1] << " ";
+
     if(x.first[0] != 0 &&  x.first[1] !=0)
       cout << x.second._parent->_x << " " << x.second._parent->_y << "\n";
-      */
-  }
-  vector<Node> path = tr.backtrack();
-  bool found = false;
+ }
+  cout << "\n \n \n \n";
+
   for (auto x = path.begin(); x!= path.end(); ++x){
     cout << (*x)._x << " " << (*x)._y <<"\n";
   }
+
 }
