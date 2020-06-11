@@ -3,8 +3,9 @@
 #include <math.h>
 #include <float.h>
 
-#include "Tree.hpp"
-#include "Environment.hpp"
+#include "pch.h"
+#include "Tree.h"
+#include "Environment.h"
 
 Node::Node(double x = 0, double y = 0, Node* parent = nullptr) : _x(x), _y(y), _parent(parent), _vec(2){
   _vec[0] = _x;
@@ -68,7 +69,7 @@ Tree::Tree(Node& root, Node& goal, double probGoal, double probWaypoint, Environ
 Node Tree::chooseTarget(){
   //gera um valor aleatório para comparar com _probGoal
   double p = (double(rand() % 100 ) / (100));
-  int i = rand() % (_waypointCache).size();
+  int i = rand() % ((_waypointCache).size());
   //target sendo o objetivo
   if(p>=0 && p <_probGoal) return _goal;
   //target sendo waypoint da iteração passada
@@ -113,15 +114,28 @@ bool Tree::extend(double step, Node* last){
 bool Tree::grow(double step, double threshold){
   Node* last = new Node(0, 0, nullptr);
   bool valid = false;
+  //quando o contador estorar 1000 itr, interromper e passar simple path
+  int cont = 0;
+  //setar threshold para parar
+  int newThreshold = 0;
+  if (threshold - _env.distance(_root, _goal) < 20) newThreshold = threshold;
+  else newThreshold = 5;
   do{
-    if(extend(step, last)) valid = _env.distance(*last, _goal) > threshold;
+
+    if(extend(step, last)) valid = _env.distance(*last, _goal) > newThreshold;
     else valid = true;
+    cont++;
+    //retorna false se não foi possivel calcular em menos de 1000 itr
+    if (cont > 1000) { delete last;  return false; }
   }while(valid);
   //adicionar goal no _nodemap com parent setado
   _goal._parent = &_nodemap[last->_vec];
   addPoints(_goal);
   //setar _parent do _root como nullptr(muito importante)
   _nodemap[_root._vec]._parent = nullptr;
+  //retorna true se foi calculado em menos de 1000 itr
+  delete last;
+  return true;
 }
 
 void Tree::addPoints(Node& current){
@@ -139,7 +153,7 @@ vector<Node> Tree::backtrack(){
     //encontrar parent do vetor
     temp = _nodemap[(temp._parent)->_vec];
     //adicionar no vetor
-    path.push_back(temp);
+    path.push_back(Node(temp._x, temp._y, nullptr));
   }
   return path;
 }

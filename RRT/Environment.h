@@ -3,7 +3,7 @@
 #include <vector>
 #include <utility>
 
-#include "Tree.hpp"
+#include "Tree.h"
 
 using namespace std;
 

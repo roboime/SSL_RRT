@@ -4,7 +4,8 @@
 #include<ctime>
 #include <fstream>
 
-#include "Environment.hpp"
+#include "pch.h"
+#include "Environment.h"
 
 using namespace std;
 
@@ -60,7 +61,7 @@ bool ObstacleGrid::checkObstacleColision(Node& current, Node& target){
 }
 
 
-
+/*
 int main(){
 
   Environment env(200, 200);
@@ -89,3 +90,4 @@ int main(){
   }
 
 }
+*/
