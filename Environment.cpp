@@ -14,15 +14,15 @@ Environment::Environment(int field_legth, int field_width) : _field_legth(field_
   srand(time(NULL));
 }
 
-double Environment::distance(Node& current, Node& target){
+float Environment::distance(Node& current, Node& target){
   return (target - current).modulus();
 }
 
 Node Environment::randomState(){
   Node newstate(0, 0, nullptr);
   //atribui valores aleatórios para o novo Node
-  newstate._x = _field_legth * (((double) (rand() % 100 ) / (100)) - 0.5 );
-  newstate._y = _field_width * (((double) (rand() % 100 ) / (100)) - 0.5 );
+  newstate._x = _field_legth * (((float) (rand() % 100 ) / (100)) - 0.5 );
+  newstate._y = _field_width * (((float) (rand() % 100 ) / (100)) - 0.5 );
   return Node(newstate._x, newstate._y, nullptr);
 }
 
@@ -33,12 +33,12 @@ bool Environment::checkWallColision(Node& current){
   else return false;
 }
 
-ObstacleGrid::ObstacleGrid(vector<pair<double, Node>> grid) : _grid(grid){}
+ObstacleGrid::ObstacleGrid(vector<pair<float, Node>> grid) : _grid(grid){}
 
 bool ObstacleGrid::checkObstacleColision(Node& current, Node& target){
   Node aux_center(0, 0, nullptr);
-  double aux_radius;
-  double aux;
+  float aux_radius;
+  float aux;
   //Verificar se ocorre colisão com cada obstáculo
   for(auto i = _grid.begin(); i!= _grid.end(); ++i){
     //atribuir valores nas variáveis auxiliares
@@ -79,7 +79,7 @@ int main(){
   vector<Node> iPath = {goal};
 
 
-  ObstacleGrid obs(vector<pair<double, Node>>{make_pair(20, obs1)});
+  ObstacleGrid obs(vector<pair<float, Node>>{make_pair(20, obs1)});
 
   Tree tr0(start, goal, 0.1, 0.6, env,obs, iPath);
 
@@ -92,7 +92,7 @@ int main(){
   vector<Node> path = tr.backtrack();
 
   auto finish = std::chrono::high_resolution_clock::now();
-  std::chrono::duration<double> elapsed = finish - st;
+  std::chrono::duration<float> elapsed = finish - st;
   std::cout << "Elapsed time: " << elapsed.count() << " s\n";
 }
 

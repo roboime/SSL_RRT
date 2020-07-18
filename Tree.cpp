@@ -7,7 +7,7 @@
 #include "Tree.hpp"
 #include "Environment.hpp"
 
-Node::Node(double x = 0, double y = 0, Node* parent = nullptr) : _x(x), _y(y), _parent(parent){
+Node::Node(float x = 0, float y = 0, Node* parent = nullptr) : _x(x), _y(y), _parent(parent){
   _vec.push_back(_x);
   _vec.push_back(_y);
 }
@@ -26,7 +26,7 @@ Node Node::operator - (const Node& obj){
   return Node(operation._x, operation._y, nullptr);
 }
 
- double Node::operator * (const Node& obj){
+ float Node::operator * (const Node& obj){
   return ((this->_x * obj._x) + (this->_y * obj._y));
 }
 
@@ -35,14 +35,14 @@ bool Node::operator == (const Node& obj){
   else return false;
 }
 
-Node Node::multiplyByConstant(double c) const{
+Node Node::multiplyByConstant(float c) const{
   Node operation;
   operation._x = c * this->_x;
   operation._y = c * this->_y;
   return Node(operation._x, operation._y, nullptr);
 }
 
-double Node::modulus() const{
+float Node::modulus() const{
   return(sqrt(pow(this->_x, 2) + pow(this->_y, 2)));
 }
 
@@ -56,10 +56,10 @@ Node::~Node() {
 }
 
 
-Tree::Tree(Node& root, Node& goal, double probGoal, double probWaypoint, Environment& env, ObstacleGrid& obs, vector<Node>& waypointCache) :
+Tree::Tree(Node& root, Node& goal, float probGoal, float probWaypoint, Environment& env, ObstacleGrid& obs, vector<Node>& waypointCache) :
  _root(root), _goal(goal), _env(env), _obs(obs), _waypointCache(waypointCache), _kdtree(flann::KDTreeSingleIndexParams()){
   //iniciar kdtree com o primeiro Node
-  _kdtree.buildIndex(flann::Matrix<double>(root._vec.data(), 1, 2));
+  _kdtree.buildIndex(flann::Matrix<float>(root._vec.data(), 1, 2));
   //adicionar primeiro node na fila
   _nodemap[root._vec] = root;
   //verificar se probGoal é válido
@@ -72,7 +72,7 @@ Tree::Tree(Node& root, Node& goal, double probGoal, double probWaypoint, Environ
 
 Node Tree::chooseTarget(){
   //gera um valor aleatório para comparar com _probGoal
-  double p = (double(rand() % 100 ) / (100));
+  float p = (float(rand() % 100 ) / (100));
   int i = rand() % ((_waypointCache).size());
   //target sendo o objetivo
   if(p>=0 && p <_probGoal) return _goal;
@@ -84,22 +84,22 @@ Node Tree::chooseTarget(){
 
 Node Tree::calcNN(Node& target){
   //querry da pesquisa
-  flann::Matrix<double> query(target._vec.data(), 1, 2);
+  flann::Matrix<float> query(target._vec.data(), 1, 2);
   //indices em ordem de menor distância
   vector<int> i(query.rows);
   flann::Matrix<int> indices(i.data(), query.rows, 2);
   //distâncias(não usado ainda)
-  vector<double> d(query.rows);
-  flann::Matrix<double> dists(d.data(), query.rows, 2);
+  vector<float> d(query.rows);
+  flann::Matrix<float> dists(d.data(), query.rows, 2);
   //fazer pesquisa
   _kdtree.knnSearch(query, indices, dists, 1, flann::SearchParams());
   //retornar Node com coordenadas correspondentes
-  double* point = _kdtree.getPoint(indices[0][0]);
-  vector<double> temp(point, point+2);
+  float* point = _kdtree.getPoint(indices[0][0]);
+  vector<float> temp(point, point+2);
   return _nodemap[temp];
 }
 
-bool Tree::extend(double step, Node* last){
+bool Tree::extend(float step, Node* last){
   Node target = chooseTarget();
   Node nearest = calcNN(target);
   //calcular proximo node
@@ -115,7 +115,7 @@ bool Tree::extend(double step, Node* last){
   }
 }
 
-bool Tree::grow(double step, double threshold){
+bool Tree::grow(float step, float threshold){
   Node* last = new Node(0, 0, nullptr);
   bool valid = false;
   //quando o contador ultrapassar 1000 itr, interromper e passar simple path
@@ -151,7 +151,7 @@ void Tree::addPoints(Node& current){
   //Adicionar no nodemap
   _nodemap[current._vec] = current;
   //Adicionar na kdtree
-  _kdtree.addPoints(flann::Matrix<double>(_nodemap[current._vec]._vec.data(), 1, 2));
+  _kdtree.addPoints(flann::Matrix<float>(_nodemap[current._vec]._vec.data(), 1, 2));
 }
 
 vector<Node> Tree::backtrack(){
