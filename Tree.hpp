@@ -32,20 +32,21 @@ public:
   vector<double> _vec;
   Node(double x, double y, Node* parent);
   //Definir operação de soma
-  Node operator + (const Node& obj);
+  inline Node operator + (const Node& obj);
   //Definir operação de subtração
-  Node operator - (const Node& obj);
+  inline Node operator - (const Node& obj);
   //Definir operação de produto escalar
   double operator * (const Node& obj);
   //comparar dois nodes
-  bool operator == (const Node& obj);
+  inline bool operator == (const Node& obj);
   //Módulo do vetor;
-  double modulus() const;
+  inline double modulus() const;
   //Multiplicar por constante
-  Node multiplyByConstant(double c) const;
+  inline Node multiplyByConstant(double c) const;
   //Calcular unitário
-  Node makeUnitary();
-  //Retornar coordenadas
+  inline Node makeUnitary();
+  //destrutor
+  ~Node();
 };
 
 class Tree{
@@ -61,6 +62,7 @@ private:
 
 public:
   unordered_map<vector<double>, Node, hash_vector> _nodemap;
+
   Tree(Node& root, Node& goal, double probGoal, double probWaypoint, Environment& env, ObstacleGrid& obs, vector<Node>& waypointCache);
   //função para determinar a extensão da árvore
   //ponteiro para determinar  distancia do ponto recem adiciondo ao objetivo
@@ -75,4 +77,6 @@ public:
   vector<Node> backtrack();
   // funcao que faz crecer a arvore proceduralmente
   bool grow(double step = 8, double threshold = 8);
+  //destrutor
+  ~Tree();
 };

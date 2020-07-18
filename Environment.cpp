@@ -43,6 +43,41 @@ bool ObstacleGrid::checkObstacleColision(Node& current, Node& target){
     //atribuir valores nas variáveis auxiliares
     aux_center = (*i).second;
     aux_radius = (*i).first;
+    //Verificar se algum ponto está dentro da circunEnvironment::Environment(int field_legth, int field_width) : _field_legth(field_legth), _field_width(field_width) {
+  //INICIAR SEED
+  srand(time(NULL));
+}
+
+double Environment::distance(Node& current, Node& target){
+  return (target - current).modulus();
+}
+
+Node Environment::randomState(){
+  Node newstate(0, 0, nullptr);
+  //atribui valores aleatórios para o novo Node
+  newstate._x = _field_legth * (((double) (rand() % 100 ) / (100)) - 0.5 );
+  newstate._y = _field_width * (((double) (rand() % 100 ) / (100)) - 0.5 );
+  return Node(newstate._x, newstate._y, nullptr);
+}
+
+bool Environment::checkWallColision(Node& current){
+  //Verificar se os módulos das coordenadas são maiores que as dimensões do campo
+  if(abs(current._x) >= (_field_legth/2)) return true;
+  else if(abs(current._y) >= (_field_width/2)) return true;
+  else return false;
+}
+
+ObstacleGrid::ObstacleGrid(vector<pair<double, Node>> grid) : _grid(grid){}
+
+bool ObstacleGrid::checkObstacleColision(Node& current, Node& target){
+  Node aux_center(0, 0, nullptr);
+  double aux_radius;
+  double aux;
+  //Verificar se ocorre colisão com cada obstáculo
+  for(auto i = _grid.begin(); i!= _grid.end(); ++i){
+    //atribuir valores nas variáveis auxiliares
+    aux_center = (*i).second;
+    aux_radius = (*i).first;
     //Verificar se algum ponto está dentro da circunferência
     if((aux_center - current).modulus() <= aux_radius || (aux_center - target).modulus() <= aux_radius) return true;
     //Verificar se há solução para a intercessão
@@ -60,7 +95,7 @@ bool ObstacleGrid::checkObstacleColision(Node& current, Node& target){
 }
 
 
-
+/*
 int main(){
 
   Environment env(200, 200);
@@ -89,3 +124,4 @@ int main(){
   }
 
 }
+*/

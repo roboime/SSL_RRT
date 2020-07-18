@@ -11,43 +11,47 @@ Node::Node(double x = 0, double y = 0, Node* parent = nullptr) : _x(x), _y(y), _
   _vec[1] = _y;
 }
 
-Node Node::operator + (const Node& obj){
+inline Node Node::operator + (const Node& obj){
   Node operation;
   operation._x = this->_x + obj._x;
   operation._y = this->_y + obj._y;
   return Node(operation._x, operation._y, nullptr);
 }
 
-Node Node::operator - (const Node& obj){
+inline Node Node::operator - (const Node& obj){
   Node operation;
   operation._x = this->_x - obj._x;
   operation._y = this->_y - obj._y;
   return Node(operation._x, operation._y, nullptr);
 }
 
-double Node::operator * (const Node& obj){
+ double Node::operator * (const Node& obj){
   return ((this->_x * obj._x) + (this->_y * obj._y));
 }
 
-bool Node::operator == (const Node& obj){
+inline bool Node::operator == (const Node& obj){
   if(this->_x == obj._x && this->_y == obj._y && this->_parent == obj._parent) return true;
   else return false;
 }
 
-Node Node::multiplyByConstant(double c) const{
+inline  Node Node::multiplyByConstant(double c) const{
   Node operation;
   operation._x = c * this->_x;
   operation._y = c * this->_y;
   return Node(operation._x, operation._y, nullptr);
 }
 
-double Node::modulus() const{
+inline  double Node::modulus() const{
   return(sqrt(pow(this->_x, 2) + pow(this->_y, 2)));
 }
 
-Node Node::makeUnitary(){
+inline Node Node::makeUnitary(){
   if(this->modulus() == 0) return Node(0,0,this->_parent);
   else return Node(_x/this->modulus(), _y/this->modulus(), this->_parent);
+}
+
+Node::~Node() {
+    _vec.clear();
 }
 
 
@@ -68,7 +72,7 @@ Tree::Tree(Node& root, Node& goal, double probGoal, double probWaypoint, Environ
 Node Tree::chooseTarget(){
   //gera um valor aleatório para comparar com _probGoal
   double p = (double(rand() % 100 ) / (100));
-  int i = rand() % (_waypointCache).size();
+  int i = rand() % ((_waypointCache).size());
   //target sendo o objetivo
   if(p>=0 && p <_probGoal) return _goal;
   //target sendo waypoint da iteração passada
@@ -113,15 +117,28 @@ bool Tree::extend(double step, Node* last){
 bool Tree::grow(double step, double threshold){
   Node* last = new Node(0, 0, nullptr);
   bool valid = false;
+  //quando o contador ultrapassar 1000 itr, interromper e passar simple path
+  int cont = 0;
+  //setar threshold para parar
+  int newThreshold = 0;
+  if (threshold - _env.distance(_root, _goal) < 20) newThreshold = threshold;
+  else newThreshold = 5;
   do{
-    if(extend(step, last)) valid = _env.distance(*last, _goal) > threshold;
+
+    if(extend(step, last)) valid = _env.distance(*last, _goal) > newThreshold;
     else valid = true;
+    cont++;
+    //retorna false se não foi possivel calcular em menos de 1000 itr
+    if (cont > 1000) { delete last;  return false; }
   }while(valid);
   //adicionar goal no _nodemap com parent setado
   _goal._parent = &_nodemap[last->_vec];
   addPoints(_goal);
   //setar _parent do _root como nullptr(muito importante)
   _nodemap[_root._vec]._parent = nullptr;
+  //retorna true se foi calculado em menos de 1000 itr
+  delete last;
+  return true;
 }
 
 void Tree::addPoints(Node& current){
@@ -139,7 +156,12 @@ vector<Node> Tree::backtrack(){
     //encontrar parent do vetor
     temp = _nodemap[(temp._parent)->_vec];
     //adicionar no vetor
-    path.push_back(temp);
+    path.push_back(Node(temp._x, temp._y, nullptr));
   }
   return path;
+}
+
+Tree::~Tree() {
+    _waypointCache.clear();
+    _nodemap.clear();
 }
