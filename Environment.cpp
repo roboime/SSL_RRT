@@ -2,6 +2,7 @@
 #include <iostream>
 #include <utility>
 #include<ctime>
+#include <chrono>
 #include <fstream>
 
 #include "Environment.hpp"
@@ -60,27 +61,52 @@ bool ObstacleGrid::checkObstacleColision(Node& current, Node& target){
 }
 
 
-
+/*
 int main(){
+  int itr = 0;
+  while(itr< 100){
+  auto st = std::chrono::high_resolution_clock::now();
+  itr++;
+
   Environment env(200, 200);
+
+
   Node obs1 (50,50,nullptr);
+
   Node start(0,0,nullptr);
   Node goal(100,100,nullptr);
+
   vector<Node> iPath = {goal};
+
+
   ObstacleGrid obs(vector<pair<double, Node>>{make_pair(20, obs1)});
+
   Tree tr0(start, goal, 0.1, 0.6, env,obs, iPath);
+
   tr0.grow();
+
   vector<Node> path0 = tr0.backtrack();
+
   Tree tr(start, goal, 0.1, 0.6, env,obs, path0);
   tr.grow();
   vector<Node> path = tr.backtrack();
+
+  auto finish = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> elapsed = finish - st;
+  std::cout << "Elapsed time: " << elapsed.count() << " s\n";
+}
+
+
   for (auto x : tr._nodemap){
     cout << x.first[0] << " " << x.first[1] << " ";
     if(x.first[0] != 0 &&  x.first[1] !=0)
       cout << x.second._parent->_x << " " << x.second._parent->_y << "\n";
  }
+
   cout << "\n \n \n \n";
   for (auto x = path.begin(); x!= path.end(); ++x){
     cout << (*x)._x << " " << (*x)._y <<"\n";
   }
+
 }
+*/

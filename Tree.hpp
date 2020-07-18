@@ -32,19 +32,19 @@ public:
   vector<double> _vec;
   Node(double x, double y, Node* parent);
   //Definir operação de soma
-  inline Node operator + (const Node& obj);
+  Node operator + (const Node& obj);
   //Definir operação de subtração
-  inline Node operator - (const Node& obj);
+  Node operator - (const Node& obj);
   //Definir operação de produto escalar
   double operator * (const Node& obj);
   //comparar dois nodes
-  inline bool operator == (const Node& obj);
+  bool operator == (const Node& obj);
   //Módulo do vetor;
-  inline double modulus() const;
+  double modulus() const;
   //Multiplicar por constante
-  inline Node multiplyByConstant(double c) const;
+  Node multiplyByConstant(double c) const;
   //Calcular unitário
-  inline Node makeUnitary();
+  Node makeUnitary();
   //destrutor
   ~Node();
 };

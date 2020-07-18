@@ -2,23 +2,24 @@
 #include<ctime>
 #include <math.h>
 #include <float.h>
+#include <chrono>
 
 #include "Tree.hpp"
 #include "Environment.hpp"
 
-Node::Node(double x = 0, double y = 0, Node* parent = nullptr) : _x(x), _y(y), _parent(parent), _vec(2){
-  _vec[0] = _x;
-  _vec[1] = _y;
+Node::Node(double x = 0, double y = 0, Node* parent = nullptr) : _x(x), _y(y), _parent(parent){
+  _vec.push_back(_x);
+  _vec.push_back(_y);
 }
 
-inline Node Node::operator + (const Node& obj){
+Node Node::operator + (const Node& obj){
   Node operation;
   operation._x = this->_x + obj._x;
   operation._y = this->_y + obj._y;
   return Node(operation._x, operation._y, nullptr);
 }
 
-inline Node Node::operator - (const Node& obj){
+Node Node::operator - (const Node& obj){
   Node operation;
   operation._x = this->_x - obj._x;
   operation._y = this->_y - obj._y;
@@ -29,23 +30,23 @@ inline Node Node::operator - (const Node& obj){
   return ((this->_x * obj._x) + (this->_y * obj._y));
 }
 
-inline bool Node::operator == (const Node& obj){
+bool Node::operator == (const Node& obj){
   if(this->_x == obj._x && this->_y == obj._y && this->_parent == obj._parent) return true;
   else return false;
 }
 
-inline  Node Node::multiplyByConstant(double c) const{
+Node Node::multiplyByConstant(double c) const{
   Node operation;
   operation._x = c * this->_x;
   operation._y = c * this->_y;
   return Node(operation._x, operation._y, nullptr);
 }
 
-inline  double Node::modulus() const{
+double Node::modulus() const{
   return(sqrt(pow(this->_x, 2) + pow(this->_y, 2)));
 }
 
-inline Node Node::makeUnitary(){
+Node Node::makeUnitary(){
   if(this->modulus() == 0) return Node(0,0,this->_parent);
   else return Node(_x/this->modulus(), _y/this->modulus(), this->_parent);
 }
@@ -127,9 +128,14 @@ bool Tree::grow(double step, double threshold){
 
     if(extend(step, last)) valid = _env.distance(*last, _goal) > newThreshold;
     else valid = true;
-    cont++;
     //retorna false se não foi possivel calcular em menos de 1000 itr
-    if (cont > 1000) { delete last;  return false; }
+    if (cont > 1000) {
+      _goal._parent = &_nodemap[last->_vec];
+      delete last;
+      return false;
+    }
+
+    cont++;
   }while(valid);
   //adicionar goal no _nodemap com parent setado
   _goal._parent = &_nodemap[last->_vec];
@@ -149,7 +155,7 @@ void Tree::addPoints(Node& current){
 }
 
 vector<Node> Tree::backtrack(){
-  Node temp = _goal;
+  Node& temp = _goal;
   vector<Node> path = {_goal};
   //repetir até encontrar a origem
   while(!(temp == _root)){
