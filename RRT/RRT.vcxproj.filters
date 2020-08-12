@@ -35,10 +35,10 @@
     <ClCompile Include="Environment.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tree.c">
+    <ClCompile Include="pch.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="Tree.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
