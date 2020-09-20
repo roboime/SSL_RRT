@@ -10,6 +10,12 @@
 #include <cstdlib>
 #include <crtdbg.h>
 
+// remove stupid MSVC min/max macro definitions
+#ifdef WIN32
+    #undef min
+    #undef max
+#endif
+
 #ifdef _DEBUG
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
 // Replace _NORMAL_BLOCK with _CLIENT_BLOCK if you want the

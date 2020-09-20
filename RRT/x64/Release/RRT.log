@@ -19,10 +19,10 @@ C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\lsh_table.
           [
               _Ty=std::seed_seq::result_type
           ]
-C:\Users\anton\source\repos\RRT\RRT\dllmain.c(56,35): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\anton\source\repos\RRT\RRT\dllmain.c(56,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\anton\source\repos\RRT\RRT\dllmain.c(87,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\anton\source\repos\RRT\RRT\dllmain.c(101,18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\dllmain.c(56,35): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\dllmain.c(56,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\dllmain.c(87,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\dllmain.c(101,18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\lsh_table.h(262,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\lsh_table.h(260): message : while compiling class template member function 'void flann::lsh::LshTable<unsigned char>::initialize(size_t)'
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\lsh_table.h(360): message : see reference to function template instantiation 'void flann::lsh::LshTable<unsigned char>::initialize(size_t)' being compiled
@@ -39,7 +39,7 @@ C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\flann.hpp(131):
               Distance=flann::L2_Simple<float>
           ]
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\flann.hpp(130): message : while compiling class template member function 'flann::Index<flann::L2_Simple<float>>::~Index(void)'
-C:\Users\anton\source\repos\RRT\RRT\Tree.h(60): message : see reference to class template instantiation 'flann::Index<flann::L2_Simple<float>>' being compiled
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\Tree.h(60): message : see reference to class template instantiation 'flann::Index<flann::L2_Simple<float>>' being compiled
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\algorithms\nn_index.h(355,1): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
   Environment.c
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\serialization.h(427,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
@@ -61,8 +61,8 @@ C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\lsh_table.
           [
               _Ty=std::seed_seq::result_type
           ]
-C:\Users\anton\source\repos\RRT\RRT\Environment.c(21,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\anton\source\repos\RRT\RRT\Environment.c(22,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\Environment.c(21,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\Environment.c(22,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\lsh_table.h(262,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\lsh_table.h(260): message : while compiling class template member function 'void flann::lsh::LshTable<unsigned char>::initialize(size_t)'
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\lsh_table.h(360): message : see reference to function template instantiation 'void flann::lsh::LshTable<unsigned char>::initialize(size_t)' being compiled
@@ -79,7 +79,7 @@ C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\flann.hpp(131):
               Distance=flann::L2_Simple<float>
           ]
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\flann.hpp(130): message : while compiling class template member function 'flann::Index<flann::L2_Simple<float>>::~Index(void)'
-C:\Users\anton\source\repos\RRT\RRT\Tree.h(60): message : see reference to class template instantiation 'flann::Index<flann::L2_Simple<float>>' being compiled
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\Tree.h(60): message : see reference to class template instantiation 'flann::Index<flann::L2_Simple<float>>' being compiled
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\algorithms\nn_index.h(355,1): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
   Tree.c
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\serialization.h(427,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
@@ -101,7 +101,7 @@ C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\lsh_table.
           [
               _Ty=std::seed_seq::result_type
           ]
-C:\Users\anton\source\repos\RRT\RRT\Tree.c(127,70): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\Tree.c(127,70): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\lsh_table.h(262,1): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\lsh_table.h(260): message : while compiling class template member function 'void flann::lsh::LshTable<unsigned char>::initialize(size_t)'
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\util\lsh_table.h(360): message : see reference to function template instantiation 'void flann::lsh::LshTable<unsigned char>::initialize(size_t)' being compiled
@@ -127,8 +127,8 @@ C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\flann.hpp(260):
               Distance=flann::L2_Simple<float>
           ]
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\flann.hpp(259): message : while compiling class template member function 'int flann::Index<flann::L2_Simple<float>>::knnSearch(const flann::Matrix<float> &,flann::Matrix<int> &,flann::Matrix<float> &,size_t,const flann::SearchParams &) const'
-C:\Users\anton\source\repos\RRT\RRT\Tree.c(95): message : see reference to function template instantiation 'int flann::Index<flann::L2_Simple<float>>::knnSearch(const flann::Matrix<float> &,flann::Matrix<int> &,flann::Matrix<float> &,size_t,const flann::SearchParams &) const' being compiled
-C:\Users\anton\source\repos\RRT\RRT\Tree.h(60): message : see reference to class template instantiation 'flann::Index<flann::L2_Simple<float>>' being compiled
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\Tree.c(95): message : see reference to function template instantiation 'int flann::Index<flann::L2_Simple<float>>::knnSearch(const flann::Matrix<float> &,flann::Matrix<int> &,flann::Matrix<float> &,size_t,const flann::SearchParams &) const' being compiled
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\Tree.h(60): message : see reference to class template instantiation 'flann::Index<flann::L2_Simple<float>>' being compiled
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\algorithms\nn_index.h(340,1): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
 C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\algorithms\nn_index.h(313): message : while compiling class template member function 'int flann::NNIndex<Distance>::knnSearch(const flann::Matrix<float> &,flann::Matrix<size_t> &,flann::Matrix<float> &,size_t,const flann::SearchParams &) const'
           with
@@ -160,7 +160,7 @@ C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\flann.hpp(83): 
           [
               Distance=flann::L2_Simple<float>
           ]
-C:\Users\anton\source\repos\RRT\RRT\Tree.c(60): message : see reference to function template instantiation 'flann::Index<flann::L2_Simple<float>>::Index(const flann::IndexParams &,Distance)' being compiled
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\Tree.c(60): message : see reference to function template instantiation 'flann::Index<flann::L2_Simple<float>>::Index(const flann::IndexParams &,Distance)' being compiled
           with
           [
               Distance=flann::L2_Simple<float>
@@ -381,9 +381,9 @@ C:\Program Files (x86)\vcpkg\installed\x64-windows\include\flann\algorithms\kmea
           [
               Distance=flann::L2_Simple<float>
           ]
-     Creating library C:\Users\anton\source\repos\RRT\x64\Release\RRT.lib and object C:\Users\anton\source\repos\RRT\x64\Release\RRT.exp
+     Creating library C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\x64\Release\RRT.lib and object C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\x64\Release\RRT.exp
   Generating code
   Previous IPDB not found, fall back to full compilation.
   All 2900 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
-  RRT.vcxproj -> C:\Users\anton\source\repos\RRT\x64\Release\RRT.dll
+  RRT.vcxproj -> C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\x64\Release\RRT.dll

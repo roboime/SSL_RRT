@@ -1,0 +1,72 @@
+﻿  dllmain.c
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\dllmain.c(62,35): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\dllmain.c(62,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\dllmain.c(107,18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Environment.c
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\Environment.c(21,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\Environment.c(22,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Tree.c
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\Tree.c(127,70): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Program Files (x86)\vcpkg\installed\x86-windows\include\flann\algorithms\dist.h(87,29): warning C4244: '=': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=double
+          ]
+C:\Program Files (x86)\vcpkg\installed\x86-windows\include\flann\algorithms\kmeans_index.h(588): message : see reference to function template instantiation 'float flann::L2_Simple<float>::operator ()<_Ty,T*>(Iterator1,Iterator2,size_t,float) const' being compiled
+          with
+          [
+              _Ty=float *,
+              T=double,
+              Iterator1=float *,
+              Iterator2=double *
+          ]
+C:\Program Files (x86)\vcpkg\installed\x86-windows\include\flann\algorithms\kmeans_index.h(588): message : see reference to function template instantiation 'float flann::L2_Simple<float>::operator ()<_Ty,T*>(Iterator1,Iterator2,size_t,float) const' being compiled
+          with
+          [
+              _Ty=float *,
+              T=double,
+              Iterator1=float *,
+              Iterator2=double *
+          ]
+C:\Program Files (x86)\vcpkg\installed\x86-windows\include\flann\algorithms\kmeans_index.h(545): message : while compiling class template member function 'void flann::KMeansIndex<Distance>::computeClustering(flann::KMeansIndex<Distance>::Node *,int *,int,int)'
+          with
+          [
+              Distance=flann::L2_Simple<float>
+          ]
+C:\Program Files (x86)\vcpkg\installed\x86-windows\include\flann\algorithms\kmeans_index.h(344): message : see reference to function template instantiation 'void flann::KMeansIndex<Distance>::computeClustering(flann::KMeansIndex<Distance>::Node *,int *,int,int)' being compiled
+          with
+          [
+              Distance=flann::L2_Simple<float>
+          ]
+C:\Program Files (x86)\vcpkg\installed\x86-windows\include\flann\algorithms\all_indices.h(132): message : see reference to class template instantiation 'flann::KMeansIndex<Distance>' being compiled
+          with
+          [
+              Distance=flann::L2_Simple<float>
+          ]
+C:\Program Files (x86)\vcpkg\installed\x86-windows\include\flann\algorithms\all_indices.h(171): message : see reference to function template instantiation 'flann::NNIndex<Distance> *flann::create_index_<flann::KMeansIndex,Distance,ElementType>(flann::Matrix<float>,const flann::IndexParams &,const Distance &,void *)' being compiled
+          with
+          [
+              Distance=flann::L2_Simple<float>
+          ]
+C:\Program Files (x86)\vcpkg\installed\x86-windows\include\flann\flann.hpp(96): message : see reference to function template instantiation 'flann::NNIndex<Distance> *flann::create_index_by_type<Distance>(const flann::flann_algorithm_t,const flann::Matrix<float> &,const flann::IndexParams &,const Distance &)' being compiled
+          with
+          [
+              Distance=flann::L2_Simple<float>
+          ]
+C:\Program Files (x86)\vcpkg\installed\x86-windows\include\flann\flann.hpp(83): message : while compiling class template member function 'flann::Index<flann::L2_Simple<float>>::Index(const flann::IndexParams &,Distance)'
+          with
+          [
+              Distance=flann::L2_Simple<float>
+          ]
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\Tree.c(60): message : see reference to function template instantiation 'flann::Index<flann::L2_Simple<float>>::Index(const flann::IndexParams &,Distance)' being compiled
+          with
+          [
+              Distance=flann::L2_Simple<float>
+          ]
+C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\RRT\Tree.h(60): message : see reference to class template instantiation 'flann::Index<flann::L2_Simple<float>>' being compiled
+     Creating library C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\Release\RRT.lib and object C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\Release\RRT.exp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 2844 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  RRT.vcxproj -> C:\Users\anton\Desktop\RoboIme\rrt-dll(cpp)\SSL_RRT\Release\RRT.dll
