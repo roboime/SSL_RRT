@@ -1,0 +1,3 @@
+Esse arquivo contém a pesquisa e desenvolvimento do algoritmo Univector Field em C++
+As funções estão sendo escritas e testadas no arquivo UVF_test.cpp, seguindo as ideias esboçadas no redmine
+enquanto o arquivo UVF.hpp é destinado a ser o header da versão final do algoritmo.
