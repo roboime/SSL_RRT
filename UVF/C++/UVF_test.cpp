@@ -9,7 +9,7 @@ using namespace std;
 //Univector Field code test
 //Developed by RoboIME Team 2021
 
-//função gaussiana que será usada na construção do UVF
+//função gaussiana que será usada na construção do UVF pela composição do TUF e do AUF
 double gauss(double r, double delta) {
     double g = exp(- pow(r, 2) / (2 * pow(delta, 2)));
     return g;
@@ -38,6 +38,47 @@ double HS(tuple<double,double,double> point , double tx, double ty, double de, d
     };
     //ajusta o ângulo para o intervalo [-pi, pi]
     return remainder(PhiH, 2 * M_PI);    
+};
+
+
+//Campo que gera um caminho simples até o objetivo (TUF) na orientação desejada. Os parâmetros de e kr serão utilizados
+//para gerar as HS. Essa função retorna um ângulo entre [-pi, pi]
+double TUF(tuple<double,double,double> point, tuple<double,double,double> target, double de, double kr){
+    //obtém a orientação do target, que será utilizada para fazer a rotação do sistema coordenado
+    double rot = -remainder(get<2>(target), 2 * M_PI);
+    double tuf_angle;
+    //cria um ponto auxiliar para realizar a rotação e translação
+    tuple<double,double,double> tmppoint;
+
+    get<0>(tmppoint) = (get<0>(point) * cos(rot) - get<1>(point) * sin(rot)) - (get<0>(target) * cos(rot) - get<1>(target) * sin(rot));
+    get<1>(tmppoint) = (get<0>(point) * sin(rot) + get<1>(point) * cos(rot)) - (get<0>(target) * sin(rot) + get<1>(target) * cos(rot));
+
+    //cria os pontos auxiliares para a determinação das espirais hiperbólicas
+    tuple<double,double, double> p_l = make_tuple(get<0>(tmppoint), get<1>(tmppoint) + de, 0);
+    tuple<double,double, double> p_r = make_tuple(get<0>(tmppoint), get<1>(tmppoint) - de, 0);
+
+    if(get<1>(tmppoint) <= - de){
+        tuf_angle = HS(p_l, 0, 0, de, kr, 1);
+    }
+    else if(get<1>(tmppoint) >=  de){
+        tuf_angle = HS(p_r, 0, 0, de, kr, 0);
+    }
+    else {
+        //definição das duas espirais hiperbólicas
+        double phiCCW = HS(p_r, 0, 0, de, kr, 0);
+        double phiCW  = HS(p_l, 0, 0, de, kr, 1);
+
+        tuple<double,double> NhCW   = make_tuple(cos(phiCW), sin(phiCW));
+        tuple<double,double> NhCCW  = make_tuple(cos(phiCCW), sin(phiCCW));
+
+        //definição das componentes do campo resultante
+        double tuf_cos = (abs(get<1>(p_l))*get<0>(NhCCW) + abs(get<1>(p_r))*get<0>(NhCW))/(2.0*de);
+        double tuf_sin = (abs(get<1>(p_l))*get<1>(NhCCW) + abs(get<1>(p_r))*get<1>(NhCW))/(2.0*de);
+        
+        tuf_angle = atan2(tuf_sin, tuf_cos);
+    };
+    //retorna a orientação do campo original
+    return remainder(tuf_angle - rot, 2 * M_PI);
 };
 
 
@@ -81,8 +122,43 @@ tuple<double, tuple<double,double> ,double> AUF(tuple<double,double,double> poin
     sin_r = sin_r/rho;
     
     //retorna um ângulo no intervalo [-pi, pi], além das coordenadas do obstáculo mais próximo e a distância classificada como mínima
-    return make_tuple(remainder(atan2(cos_r, sin_r), 2 * M_PI), min_obst, min_dist);  
+    return make_tuple(remainder(atan2(sin_r, cos_r), 2 * M_PI), min_obst, min_dist);  
 };
+
+
+double UVF(tuple<double,double,double> point, tuple<double,double,double> target, vector<tuple<double, double>> obstacle_vector, 
+            double de, double kr, double d_min, double delta){
+    //vetor com as informações do AUF
+    tuple<double, tuple<double,double> ,double> auf_vector = AUF(point, obstacle_vector);
+    double tuf_angle = TUF(point, target, 5, 5);
+    double uvf_angle;
+
+    cout << get<0>(auf_vector) << endl;
+    cout << tuf_angle << endl;
+
+    //caso a distância seja menor que um mínimo, ele deverá considerar apenas a angulação do AUF. Caso contrário, deverá ser feita a composição
+    if(get<2>(auf_vector) < d_min){
+        uvf_angle = get<0>(auf_vector);
+        cout << "caso 1" << endl;
+    }else{
+        if(abs(tuf_angle - get<0>(auf_vector)) >= (2 * M_PI - abs(tuf_angle - get<0>(auf_vector)))){
+            if(get<0>(auf_vector) < 0){    
+                uvf_angle = remainder(((2 * M_PI + get<0>(auf_vector)) * gauss(get<2>(auf_vector) - d_min, delta) + (tuf_angle) * (1 - gauss(get<2>(auf_vector) - d_min, delta))), 2 * M_PI);
+                cout << "caso 2" << endl;
+            }
+            if(tuf_angle < 0){    
+                uvf_angle = remainder(((get<0>(auf_vector)) * gauss(get<2>(auf_vector) - d_min, delta) + (2 * M_PI + tuf_angle) * (1 - gauss(get<2>(auf_vector) - d_min, delta))), 2 * M_PI);
+                cout << "caso 3" << endl;
+            }         
+        }else{
+            uvf_angle = remainder((get<0>(auf_vector)) * gauss(get<2>(auf_vector) - d_min, delta) + (tuf_angle) * (1 - gauss(get<2>(auf_vector) - d_min, delta)), 2 * M_PI);
+            cout << "caso 4" << endl;
+        }
+
+    }
+    return uvf_angle;
+};
+
 
 int main()
 {
@@ -90,12 +166,11 @@ int main()
     double y;
     double o;
     tuple<double,double,double> current;
+    tuple<double,double,double> target = make_tuple(10, 0, M_PI_2);
     vector<tuple<double,double>> obstacle_vector;
     obstacle_vector.push_back(make_tuple(0,0));
     cin >> x >> y >> o;
     current = make_tuple(x, y, o); 
-    cout << get<0>(AUF(current, obstacle_vector)) << endl;
-    cout << get<0>(get<1>(AUF(current, obstacle_vector))) << get<1>(get<1>(AUF(current, obstacle_vector))) << endl;
-    cout << get<2>(AUF(current, obstacle_vector)) << endl;
+    cout << UVF(current,target,obstacle_vector, 5,5,5,3) << endl;
     return 0;
 };
