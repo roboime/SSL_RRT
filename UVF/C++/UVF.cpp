@@ -2,7 +2,7 @@
 #include <math.h>
 #include <tuple>
 #include <vector>
-
+#include <chrono>
 
 using namespace std;
 
@@ -126,6 +126,7 @@ tuple<double, tuple<double,double> ,double> AUF(tuple<double,double,double> poin
 };
 
 
+//Campo resultante. retorna o ângulo final para cálculo das velocidades
 double UVF(tuple<double,double,double> point, tuple<double,double,double> target, vector<tuple<double, double>> obstacle_vector, 
             double de, double kr, double d_min, double delta){
     //vetor com as informações do AUF
@@ -139,26 +140,21 @@ double UVF(tuple<double,double,double> point, tuple<double,double,double> target
     //caso a distância seja menor que um mínimo, ele deverá considerar apenas a angulação do AUF. Caso contrário, deverá ser feita a composição
     if(get<2>(auf_vector) < d_min){
         uvf_angle = get<0>(auf_vector);
-        cout << "caso 1" << endl;
     }else{
         if(abs(tuf_angle - get<0>(auf_vector)) >= (2 * M_PI - abs(tuf_angle - get<0>(auf_vector)))){
             if(get<0>(auf_vector) < 0){    
                 uvf_angle = remainder(((2 * M_PI + get<0>(auf_vector)) * gauss(get<2>(auf_vector) - d_min, delta) + (tuf_angle) * (1 - gauss(get<2>(auf_vector) - d_min, delta))), 2 * M_PI);
-                cout << "caso 2" << endl;
             }
             if(tuf_angle < 0){    
                 uvf_angle = remainder(((get<0>(auf_vector)) * gauss(get<2>(auf_vector) - d_min, delta) + (2 * M_PI + tuf_angle) * (1 - gauss(get<2>(auf_vector) - d_min, delta))), 2 * M_PI);
-                cout << "caso 3" << endl;
             }         
         }else{
             uvf_angle = remainder((get<0>(auf_vector)) * gauss(get<2>(auf_vector) - d_min, delta) + (tuf_angle) * (1 - gauss(get<2>(auf_vector) - d_min, delta)), 2 * M_PI);
-            cout << "caso 4" << endl;
         }
 
     }
     return uvf_angle;
 };
-
 
 int main()
 {
@@ -171,6 +167,12 @@ int main()
     obstacle_vector.push_back(make_tuple(0,0));
     cin >> x >> y >> o;
     current = make_tuple(x, y, o); 
+    // Record start time
+    auto start = chrono::high_resolution_clock::now();
     cout << UVF(current,target,obstacle_vector, 5,5,5,3) << endl;
+    // Record end time
+    auto finish = std::chrono::high_resolution_clock::now();
+    chrono::duration<double> elapsed = finish - start;
+    cout << "Elapsed time: " << elapsed.count();
     return 0;
 };
