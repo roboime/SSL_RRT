@@ -3,18 +3,15 @@
 #include <tuple>
 #include <vector>
 #include <chrono>
-
+#include "UVF.hpp"
 using namespace std;
-
 //Univector Field code test
 //Developed by RoboIME Team 2021
-
 //função gaussiana que será usada na construção do UVF pela composição do TUF e do AUF
 double gauss(double r, double delta) {
     double g = exp(- pow(r, 2) / (2 * pow(delta, 2)));
     return g;
 };
-
 
 //Espiral hiperbólica (HS), onde tx e ty são parâmetros de ajuste, de é o raio mínimo e kr é a constante de suavização da curva 
 double HS(tuple<double,double,double> point , double tx, double ty, double de, double kr, double ccw) {
@@ -39,7 +36,6 @@ double HS(tuple<double,double,double> point , double tx, double ty, double de, d
     //ajusta o ângulo para o intervalo [-pi, pi]
     return remainder(PhiH, 2 * M_PI);    
 };
-
 
 //Campo que gera um caminho simples até o objetivo (TUF) na orientação desejada. Os parâmetros de e kr serão utilizados
 //para gerar as HS. Essa função retorna um ângulo entre [-pi, pi]
@@ -80,7 +76,6 @@ double TUF(tuple<double,double,double> point, tuple<double,double,double> target
     //retorna a orientação do campo original
     return remainder(tuf_angle - rot, 2 * M_PI);
 };
-
 
 //Campo para desviar de obstáculos (AUF), onde obstacle vector são os obstáculos no campo passados na forma de tuplas <x, y>.
 tuple<double, tuple<double,double> ,double> AUF(tuple<double,double,double> point, vector<tuple<double, double>> obstacle_vector) {
@@ -125,7 +120,6 @@ tuple<double, tuple<double,double> ,double> AUF(tuple<double,double,double> poin
     return make_tuple(remainder(atan2(sin_r, cos_r), 2 * M_PI), min_obst, min_dist);  
 };
 
-
 //Campo resultante. retorna o ângulo final para cálculo das velocidades
 double UVF(tuple<double,double,double> point, tuple<double,double,double> target, vector<tuple<double, double>> obstacle_vector, 
             double de, double kr, double d_min, double delta){
@@ -154,25 +148,4 @@ double UVF(tuple<double,double,double> point, tuple<double,double,double> target
 
     }
     return uvf_angle;
-};
-
-int main()
-{
-    double x;
-    double y;
-    double o;
-    tuple<double,double,double> current;
-    tuple<double,double,double> target = make_tuple(10, 0, M_PI_2);
-    vector<tuple<double,double>> obstacle_vector;
-    obstacle_vector.push_back(make_tuple(0,0));
-    cin >> x >> y >> o;
-    current = make_tuple(x, y, o); 
-    // Record start time
-    auto start = chrono::high_resolution_clock::now();
-    cout << UVF(current,target,obstacle_vector, 5,5,5,3) << endl;
-    // Record end time
-    auto finish = std::chrono::high_resolution_clock::now();
-    chrono::duration<double> elapsed = finish - start;
-    cout << "Elapsed time: " << elapsed.count();
-    return 0;
 };
