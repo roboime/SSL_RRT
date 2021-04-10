@@ -11,10 +11,8 @@
 #include <crtdbg.h>
 
 // remove stupid MSVC min/max macro definitions
-#ifdef WIN32
-    #undef min
-    #undef max
-#endif
+#undef min
+#undef max
 
 #ifdef _DEBUG
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
