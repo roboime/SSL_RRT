@@ -23,7 +23,7 @@
 
 using namespace std;
 
-extern "C" __declspec(dllexport) int __cdecl SetEnv(int a, int b, int* c);
+extern "C" __declspec(dllexport) int __cdecl SetEnv(bool dealloc, int a, int b, int* c);
 
 BOOL APIENTRY DllMain(HMODULE hModule,
     DWORD  ul_reason_for_call,
@@ -40,11 +40,11 @@ BOOL APIENTRY DllMain(HMODULE hModule,
     }
     return TRUE;
 }
-__declspec(dllexport) int __cdecl SetEnv(int a, int b, int* c) {
+__declspec(dllexport) int __cdecl SetEnv(bool dealloc, int a, int b, int* c) {
 
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-    #define DISABLE_CONSOLE_PRINT
+    #define ENABLE_CONSOLE_PRINT
     //Habilitar funções cout, cin e cerr. Não usar na versão final
     #ifdef ENABLE_CONSOLE_PRINT
         AllocConsole();
@@ -54,13 +54,15 @@ __declspec(dllexport) int __cdecl SetEnv(int a, int b, int* c) {
         freopen_s(&fDummy, "CONOUT$", "w", stdout);
     #endif // CONSOLE_PRINT
     //Desabilitar Console
-    #ifdef DISABLE_CONSOLE_PRINT
+    if (dealloc) {
         FreeConsole();
-    #endif // DISABLE_CONSOLE_PRINT
+        fclose(fDummy);
+    }
+
 
 
     //Add code here
-
+        cout << "111";
     *c = b - a;
     return b + a;
 
