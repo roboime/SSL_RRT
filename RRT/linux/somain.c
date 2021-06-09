@@ -69,4 +69,5 @@ float __attribute__ ((visibility("default"))) SetEnv(int* seed, int* pathsize, f
         *debug = fps;
         return 0;
     }
+    return 0;
 }
