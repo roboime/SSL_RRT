@@ -27,9 +27,12 @@
     <ClInclude Include="Tree.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="RRT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dllmain.c">
+    <ClCompile Include="RRT.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Environment.c">
