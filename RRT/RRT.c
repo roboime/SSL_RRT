@@ -142,9 +142,13 @@ RRT_API int __cdecl SetEnv(int* seed, int* pathsize, float probGoal, float probW
     //Start/end
     Node start(*(startAndEnd), *(startAndEnd + 1), nullptr);
     Node end(*(startAndEnd + 2), *(startAndEnd + 3), nullptr);
-    //ObstacleList
-    vector<pair<float, Node>> obsV;
+
+    //ObstacleList   
+    //vector<pair<float, Node>> obsV;     antigo
+    vector<pair<string, vector<float>>> obsV;
+
     for (int i = 0; i < obsLen; i++) {
+        //  OBS : ATUALIZAR PRA NOVO FORMATO DE DADOS
         obsV.push_back(make_pair(*(obsList + 3*i), Node(*(obsList + 3*i + 1), *(obsList +3*i +2), nullptr)));
     }
     ObstacleGrid obs(obsV);
