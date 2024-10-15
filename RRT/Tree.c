@@ -105,7 +105,7 @@ bool Tree::extend(float step, Node* last) {
     //calcular proximo node
     Node temp = (nearest + ((target - nearest).makeUnitary()).multiplyByConstant(step));
     //verificar colisão com parede ou obstáculo
-    if (_env.checkWallColision(temp) || _obs.checkObstacleColision(nearest, temp)) return false;
+    if (_env.checkWallColision(temp) || _obs.checkObstacleCollision(nearest, temp)) return false;
     else {
         //verificar se ponto n existe no nodemap
         if (_nodemap.find(temp._vec) != _nodemap.end()) return true;

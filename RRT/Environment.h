@@ -43,8 +43,8 @@ public:
     ObstacleGrid(vector<pair<string, vector<float>>> grid);
 
     //funcoes auxilares para a colisao de obstaculos retangulares
-    bool pointInRectangle(Node& point, Node& rect_center, float rect_width, float rect_height)
-    bool lineIntersectsRectangle(Node& current, Node& target, Node& rectCenter, float rectWidth, float rectHeight)
+    bool pointInRectangle(Node& point, Node& rect_center, float rect_width, float rect_height);
+    bool lineIntersectsRectangle(Node& current, Node& target, Node& rectCenter, float rectWidth, float rectHeight);
     
     // Check for collision between current and target nodes
     bool checkObstacleCollision(Node& current, Node& target);

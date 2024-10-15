@@ -56,7 +56,7 @@ bool ObstacleGrid::lineIntersectsRectangle(Node& current, Node& target, Node& re
     return true;
 }
 
-bool ObstacleGrid::checkObstacleColision(Node& current, Node& target) {
+bool ObstacleGrid::checkObstacleCollision(Node& current, Node& target) {
   // Verificar colisão com cada obstáculo
 
   //variaveis auxiliare para o circulo
@@ -95,7 +95,7 @@ bool ObstacleGrid::checkObstacleColision(Node& current, Node& target) {
         rect_width = (*i).second[0];  
         rect_height = (*i).second[1];  
         rect_center._x = (*i).second[2];
-        rect_center._x = (*i).second[2];  
+        rect_center._y = (*i).second[3];  
         
         // Passo 1: Verificar se current ou target estão dentro do retângulo
         if (pointInRectangle(current, rect_center, rect_width, rect_height) || 
