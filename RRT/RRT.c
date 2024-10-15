@@ -155,13 +155,13 @@ RRT_API int __cdecl SetEnv(int* seed, int* pathsize, float probGoal, float probW
 
 
 
-        */
+        
         
         if (*(obsList + 3 * i) == "circle") {
 
         }
-
         obsV.push_back(make_pair(*(obsList + 3*i),      ));
+        */
     }
     ObstacleGrid obs(obsV);
     //lastTree

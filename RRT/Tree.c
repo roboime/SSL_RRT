@@ -30,7 +30,7 @@ float Node::operator * (const Node& obj) {
     return ((this->_x * obj._x) + (this->_y * obj._y));
 }
 
-bool Node::operator == (const Node& obj) {
+bool Node::operator == (const Node& obj) const{
     if (this->_x == obj._x && this->_y == obj._y && this->_parent == obj._parent) return true;
     else return false;
 }

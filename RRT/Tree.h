@@ -38,7 +38,7 @@ public:
     //Definir operação de produto escalar
     float operator * (const Node& obj);
     //comparar dois nodes
-    bool operator == (const Node& obj);
+    bool operator == (const Node& obj) const;
     //Módulo do vetor;
     float modulus() const;
     //Multiplicar por constante
