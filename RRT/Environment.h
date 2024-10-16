@@ -38,9 +38,9 @@ public:
     //parametros circle: raio, centro_x, centro_y
     //parametros rect: width, height, centro_x, centro_y
 
-    vector<pair<string, vector<float>>> _grid;
+    vector<pair<float, vector<float>>> _grid;
 
-    ObstacleGrid(vector<pair<string, vector<float>>> grid);
+    ObstacleGrid(vector<pair<float, vector<float>>> grid);
 
     //funcoes auxilares para a colisao de obstaculos retangulares
     bool pointInRectangle(Node& point, Node& rect_center, float rect_width, float rect_height);

@@ -30,7 +30,7 @@ bool Environment::checkWallColision(Node& current) {
     else return false;
 }
 
-ObstacleGrid::ObstacleGrid(vector<pair<string, vector<float>>> grid) : _grid(grid) {}
+ObstacleGrid::ObstacleGrid(vector<pair<float, vector<float>>> grid) : _grid(grid) {}
 
 bool ObstacleGrid::pointInRectangle(Node& point, Node& rectCenter, float rectWidth, float rectHeight) {
     float leftX = rectCenter._x - rectWidth / 2;
@@ -69,7 +69,7 @@ bool ObstacleGrid::checkObstacleCollision(Node& current, Node& target) {
   float rect_width, rect_height;
 
   for (auto i = _grid.begin(); i != _grid.end(); ++i) {
-      if ((*i).first == "circle") {
+      if ((*i).first == 0) {
         // Lógica para colisão com obstáculo circular
         aux_radius = (*i).second[0];
         
@@ -89,7 +89,7 @@ bool ObstacleGrid::checkObstacleCollision(Node& current, Node& target) {
                 (-sqrt(aux) - 2 * ((target - current) * (current - aux_center))) / (2 * pow((target - current).modulus(), 2)) >= 0) return true;
         }
 
-      } else if ((*i).first == "rectangle") {
+      } else if ((*i).first == 1) {
           
         // Atribuir valores nas variáveis auxiliares
         rect_width = (*i).second[0];  

@@ -145,23 +145,35 @@ RRT_API int __cdecl SetEnv(int* seed, int* pathsize, float probGoal, float probW
 
     //ObstacleList   
     //vector<pair<float, Node>> obsV;     antigo
-    vector<pair<string, vector<float>>> obsV;
+    vector<pair<float, vector<float>>> obsV;
 
     for (int i = 0; i < obsLen; i++) {
 
         /*        OBS: REVISAR FORMATO E TIPO DOS DADOS
-        *(obsList + 3*i) -> string
+        *(obsList + 3*i) -> float; 0: circulo; 1: retangulo
         *(obsList + 3*i + 1) -> 
 
 
 
-        
-        
-        if (*(obsList + 3 * i) == "circle") {
+        */
+        vector<float> parametros;
+
+        if (*(obsList + 3 * i) == 0) { //circulo
+            for (int j = 1; j < 4; j++){
+                parametros.push_back(*(obsList + 3 * i + j));
+
+            }
+        }
+        else if (*(obsList + 3 * i) == 1) {
+            for (int j = 1; j < 5; j++) {
+                parametros.push_back(*(obsList + 3 * i + j));
+
+            }
 
         }
-        obsV.push_back(make_pair(*(obsList + 3*i),      ));
-        */
+
+        obsV.push_back(make_pair(*(obsList + 3*i), parametros));
+        
     }
     ObstacleGrid obs(obsV);
     //lastTree
