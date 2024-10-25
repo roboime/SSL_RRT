@@ -158,21 +158,12 @@ RRT_API int __cdecl SetEnv(int* seed, int* pathsize, float probGoal, float probW
         */
         vector<float> parametros;
 
-        if (*(obsList + 3 * i) == 0) { //circulo
-            for (int j = 1; j < 4; j++){
-                parametros.push_back(*(obsList + 3 * i + j));
-
-            }
-        }
-        else if (*(obsList + 3 * i) == 1) {
-            for (int j = 1; j < 5; j++) {
-                parametros.push_back(*(obsList + 3 * i + j));
-
-            }
+        for (int j = 1; j < 5; j++) {
+            parametros.push_back(*(obsList + 5 * i + j));
 
         }
 
-        obsV.push_back(make_pair(*(obsList + 3*i), parametros));
+        obsV.push_back(make_pair(*(obsList + 5*i), parametros));
         
     }
     ObstacleGrid obs(obsV);
