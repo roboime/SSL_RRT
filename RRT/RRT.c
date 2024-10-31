@@ -73,12 +73,18 @@ int CheckInputError(int* seed, int* pathsize, float* startAndEnd, float* obsList
         }
         try{
             for (int i = 0; i < obsLen; ++i) {
-                vobsList[3*i] = vobsList[3*i];
-                vobsList[3*i+1] = vobsList[3*i+1];
-                vobsList[3*i+2] = vobsList[3*i+2];
-                if (!is_valid(vobsList[3 * i])) return 13;
-                if (!is_valid(vobsList[3 * i + 1]) || !is_into_bounds(vobsList[3 * i + 1], field_length)) return 14;
-                if (!is_valid(vobsList[3 * i + 2]) || !is_into_bounds(vobsList[3 * i + 2], field_width)) return 15;
+                vobsList[5*i] = vobsList[5*i];
+                vobsList[5*i+1] = vobsList[5*i+1];
+                vobsList[5*i+2] = vobsList[5*i+2];
+                vobsList[5 * i + 3] = vobsList[5 * i + 3];
+                vobsList[5 * i + 4] = vobsList[5 * i + 4];
+
+                if (!is_valid(vobsList[5 * i])) return 13;
+                if (!is_valid(vobsList[5 * i + 1]) || !is_into_bounds(vobsList[3 * i + 1], field_length)) return 14;
+                if (!is_valid(vobsList[5 * i + 2]) || !is_into_bounds(vobsList[3 * i + 2], field_width)) return 15;
+                if (!is_valid(vobsList[5 * i + 3]) || !is_into_bounds(vobsList[3 * i + 2], field_width)) return 16;
+                if (!is_valid(vobsList[5 * i + 4]) || !is_into_bounds(vobsList[3 * i + 2], field_width)) return 17;
+
             }
         }
         catch (...) {
@@ -88,8 +94,8 @@ int CheckInputError(int* seed, int* pathsize, float* startAndEnd, float* obsList
             for (int i = 0; i < lastTreeLen; ++i) {
                 vlastTree[2 * i] = vlastTree[2 * i];
                 vlastTree[2 * i + 1] = vlastTree[2 * i + 1];
-                if (!is_valid(vlastTree[2 * i]) || !is_into_bounds(vlastTree[2 * i], field_length)) return 16;
-                if (!is_valid(vlastTree[2 * i + 1]) || !is_into_bounds(vlastTree[2 * i + 1], field_width)) return 17;
+                if (!is_valid(vlastTree[2 * i]) || !is_into_bounds(vlastTree[2 * i], field_length)) return 18;
+                if (!is_valid(vlastTree[2 * i + 1]) || !is_into_bounds(vlastTree[2 * i + 1], field_width)) return 19;
             }
         }
         catch (...) {
